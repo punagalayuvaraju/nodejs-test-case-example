@@ -1,0 +1,5 @@
+DEPENDENCIES
+/////////////////////////////////////////////////////////////
+
+use this cmd to install dep:
+npm install chai mocha chai-http --save-dev
