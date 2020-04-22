@@ -1,0 +1,276 @@
+let chai=require('chai');
+let chaiHttp=require('chai-http');
+let server=require('../app');
+
+
+chai.should();
+chai.use(chaiHttp);
+
+describe('Course Api',()=>{
+
+
+    describe('Get /api/getpublishedcourse',()=>{
+        it('it should get all published course',(done)=>{
+            chai.request(server)
+            .get('/api/courses/getpublishedcourse')
+            .end(function(error,res){
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              res.body.Result.should.be.a('array');
+              res.body.Result[0].should.have.property('_id');
+              res.body.Result[0].should.have.property('course_name');
+              res.body.Result[0].should.have.property('rating');
+              res.body.Result[0].should.have.property('max_student_enrollments_allowed');
+              res.body.Result[0].should.have.property('price');
+              res.body.Result[0].should.have.property('course_img_url');
+              res.body.Result[0].should.have.property('short_description');
+              res.body.Result[0].should.have.property('publishedOn');
+            
+              done();
+            });     
+            
+        });
+
+        it('it should not get any published course',(done)=>{
+            chai.request(server)
+            .get('/getpublishedcourse')
+            .end(function(error,res){
+              res.should.have.status(404); 
+              done();
+            });     
+        });
+    });
+
+
+    describe('Get /api/getcreatedcourse',()=>{
+        it('it should get all created course',(done)=>{
+            chai.request(server)
+            .get('/api/courses/getcreatedcourse')
+            .end((error,res)=>{
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              res.body.Result.should.be.a('array');
+              res.body.Result[0].should.have.property('_id');
+              res.body.Result[0].should.have.property('course_name');
+              res.body.Result[0].should.have.property('rating');
+              res.body.Result[0].should.have.property('max_student_enrollments_allowed');
+              res.body.Result[0].should.have.property('price');
+              res.body.Result[0].should.have.property('course_img_url');
+              res.body.Result[0].should.have.property('short_description');
+              res.body.Result[0].should.have.property('publishedOn');
+              done();
+            });     
+        });
+
+        it('it should not get any created course',(done)=>{
+            chai.request(server)
+            .get('/getcreatedcourse')
+            .end(function(error,res){
+              res.should.have.status(404); 
+              done();
+            });     
+        });
+    });
+
+
+    
+    describe('Get /api/getdraftcourse',()=>{
+        it('it should get all drafted course',(done)=>{
+            chai.request(server)
+            .get('/api/courses/getdraftcourse')
+            .end((error,res)=>{
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              done();
+            });     
+            
+        });
+
+        it('it should not get any drafted course',(done)=>{
+            chai.request(server)
+            .get('/getdraftcourse')
+            .end(function(error,res){
+              res.should.have.status(404); 
+              done();
+            });     
+        });
+    });
+
+
+
+    describe('Get /api/getinstructordetails',()=>{
+      it('it should get all instructor details',(done)=>{
+          chai.request(server)
+          .get('/api/lov/getinstructordetails')
+          .end((error,res)=>{
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a('object');
+            res.body.Result.should.be.a('array');
+            res.body.Result[0].should.have.property('_id');
+            res.body.Result[0].should.have.property('name');
+            res.body.Result[0].should.have.property('description');
+            res.body.Result[0].should.have.property('image');
+            done();
+          });          
+      });
+
+      it('it should not get any instructor details',(done)=>{
+          chai.request(server)
+          .get('/getinstructordetails')
+          .end(function(error,res){
+            res.should.have.status(404); 
+            done();
+          });     
+      });
+  });
+
+  
+
+  describe('Get /api/gettakewaydetails',()=>{
+    it('it should get all takewaydetails',(done)=>{
+        chai.request(server)
+        .get('/api/lov/gettakewaydetails')
+        .end((error,res)=>{
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.Result.should.be.a('array');
+          res.body.Result[0].should.have.property('_id');
+          res.body.Result[0].should.have.property('name');
+          res.body.Result[0].should.have.property('description');
+          res.body.Result[0].should.have.property('image');
+          done();
+        });         
+    });
+
+    it('it should not get any takewaydetails',(done)=>{
+        chai.request(server)
+        .get('/gettakewaydetails')
+        .end(function(error,res){
+          res.should.have.status(404); 
+          done();
+        });     
+    });
+});
+
+
+
+describe('Get /api/getalltemplatess',()=>{
+    it('it should get all template',(done)=>{
+        chai.request(server)
+        .get('/api/template/getalltemplates')
+        .end((error,res)=>{
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.Result.should.be.a('array');
+          res.body.Result[0].should.have.property('template_details')
+          res.body.Result[0].template_details[0].should.have.property('name');
+          res.body.Result[0].template_details[0].should.have.property('image');
+          res.body.Result[0].should.have.property('course_details')
+          done();
+        });       
+    });
+
+    it('it should not get any template',(done)=>{
+        chai.request(server)
+        .get('/getalltemplates')
+        .end(function(error,res){
+          res.should.have.status(404); 
+          done();
+        });     
+    });
+});
+
+
+
+describe('Post /api/createtemplate',()=>{
+    it('it should create and save all templates',(done)=>{
+        chai.request(server)
+        .post('/api/template/savetemplate')
+        .end((error,res)=>{
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          done();
+        });     
+    });
+
+    it('it should not create any template',(done)=>{
+        chai.request(server)
+        .post('/savetemplate')
+        .end(function(error,res){
+          res.should.have.status(404); 
+          done();
+        });     
+    });
+});
+
+
+
+
+
+
+describe('Post /api/savecourse',()=>{
+    it('it should save all course',(done)=>{
+
+      const coursetosave={
+        name:"Engineering",
+        description:"Introduction to Engineering",
+        image:""
+      }
+
+        chai.request(server)
+        .post('/api/courses/savecourse')
+        .send(coursetosave)
+        .end((error,res)=>{
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('Result');
+          done();
+        });       
+    });
+
+    it('it should not save any course',(done)=>{
+        chai.request(server)
+        .post('/savecourse')
+        .end(function(error,res){
+          res.should.have.status(404); 
+          done();
+        });     
+    });
+});
+
+
+describe('Get /api/getcertificationdetails',()=>{
+  it('it should get all certification details',(done)=>{
+      chai.request(server)
+      .get('/api/lov/getcertificationdetails')
+      .end((error,res)=>{
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.Result.should.be.a('array');
+        res.body.Result[0].should.have.property('_id');
+        res.body.Result[0].should.have.property('name');
+        done();
+      });     
+  });
+
+  it('it should not get any certifications details',(done)=>{
+      chai.request(server)
+      .get('/getcertificationdetails')
+      .end(function(error,res){
+        res.should.have.status(404); 
+        done();
+      });     
+  });
+});
+
+
+});
